@@ -24,15 +24,9 @@ app.use(bodyParser.urlencoded({ extend : true }));
 
 app.post('/gallery', (req, res) => {
   const data = req.body;
-  // const author = req.body.author;
-  // const link = req.body.link;
-  // const description = req.body.description;
-  // const artwork = {author : data.author, link : data.link, description : data.description};
-  // console.log('1', artwork);
 
   let result = Gallery.create({author : data.author, link : data.link, description : data.description})
     .then((data) => {
-      console.log('DATA DATA ===', data);
       return res.render('partials/gallery/index', data);
     })
     .catch(err => {
@@ -42,9 +36,13 @@ app.post('/gallery', (req, res) => {
 });
 
 app.get('/gallery', (req, res) => {
+
   return Gallery.findAll()
-    .then(arts => {
-      return res.json(arts);
+    .then((data) => {
+      let locals ={
+        data : data
+      };
+      return res.render('partials/gallery/index', locals);
     })
     .catch(err => {
       console.log(err);

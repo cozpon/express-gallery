@@ -1,0 +1,18 @@
+<h1>All ArtWork</h1>
+
+<div class="collection">
+  <ul class="Artwork">
+    <br>
+    {{#each artwork}}
+    <li>Author : {{author}}</li>
+    <li>Link : {{link}}</li>
+    <li>Description : {{description}}</li>
+    {{!-- <a href="http://localhost:4567/gallery/{{this.author}}/edit">Edit Item</a> --}}
+    <br>
+    <br>
+    {{/each}}
+
+  </ul>
+</div>
+
+<a href="http://localhost:4567/gallery/new">Create New Artwork</a>

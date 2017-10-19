@@ -1,0 +1,12 @@
+<h1>Create New Artwork / POST/ INSERT</h1>
+
+<div class="collection">
+  <form action="/gallery" method="POST">
+    Author : <input type="text" name='author' value= "{{artwork.author}}"><br>
+    Link : <input type="text" name= 'link' value="{{artwork.link}}"><br>
+    Description : <textarea name="description" id="description" cols="30" rows="30">{{artwork.description}}</textarea>
+    <button type="submit">Submit</button>
+  </form>
+</div>
+
+<a href="http://localhost:4567/gallery">List All Artwork</a>

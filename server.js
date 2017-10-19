@@ -41,6 +41,13 @@ app.get('/gallery/new', (req, res) => {
   return res.render('partials/gallery/new');
 });
 
+app.get('/gallery/:id', (req, res) => {
+  const id = req.params.id;
+  return Gallery.findById(id)
+    .then(art => {
+      return res.json(art);
+    });
+});
 
 app.listen(port, () => {
   db.sequelize.sync({ force : true });

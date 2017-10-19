@@ -37,7 +37,7 @@ app.post('/gallery', (req, res) => {
 
 app.get('/gallery', (req, res) => {
 
-  return Gallery.findAll()
+  return Gallery.findAll({order : [['id', 'ASC']]})
     .then((data) => {
       let locals ={
         data : data
@@ -57,8 +57,11 @@ app.get('/gallery/new', (req, res) => {
 app.get('/gallery/:id', (req, res) => {
   const id = req.params.id;
   return Gallery.findById(id)
-    .then(art => {
-      return res.json(art);
+    .then((data) => {
+      let locals ={
+        data : data
+      };
+      return res.render('partials/gallery/artwork', locals);
     });
 });
 
@@ -66,21 +69,25 @@ app.get('/gallery/:id/edit', (req, res) => {
   const id = req.params.id;
 
   return Gallery.findById(id)
-    .then(art => {
-      return res.json(art);
+    .then((data) => {
+      let locals ={
+        data : data
+      };
+      return res.render('partials/gallery/edit', locals);
     });
 });
 
-app.put('/gallery/:id', (req, res) => {
-  const id = req.body.id;
-  const newAuthor = req.body.author;
-  const newLink = req.body.link;
-  const newDescription = req.body.description;
-  const editArtwork = {author : newAuthor, link : newLink, description : newDescription};
+app.put('/gallery/:id/edit', (req, res) => {
+  const data = req.body;
+  const id = req.params.id;
 
-  return Gallery.update({editArtwork : editArtwork})
-    .then(newEdit => {
-      return res.json(newEdit);
+
+  return Gallery.update({author : data.author, link : data.link, description : data.description}, { where : {id : id}})
+    .then((data) => {
+      let locals ={
+        data : data
+      };
+      return res.redirect('/gallery');
     })
     .catch(err => {
       console.log(err);
@@ -88,12 +95,19 @@ app.put('/gallery/:id', (req, res) => {
     });
 });
 
-app.delete('/gallery/:id', (req, res) => {
+app.delete('/gallery/:id/edit', (req, res) => {
   const id = req.params.id;
 
   Gallery.destroy({where : {id : id}})
-    .then(() => {
+    .then((data) => {
+      let locals ={
+        data : data
+      };
       return res.redirect('/gallery');
+    })
+    .catch(err => {
+      console.log(err);
+      res.send(err);
     });
 });
 

@@ -4,10 +4,11 @@
   <ul class="Artwork">
     <br>
     {{#each data}}
+    <li>Id : {{id}}</li>
     <li>Author : {{author}}</li>
     <li>Link : {{link}}</li>
     <li>Description : {{description}}</li>
-    {{!-- <a href="http://localhost:4567/gallery/{{this.author}}/edit">Edit Item</a> --}}
+    <a href="http://localhost:4567/gallery/{{id}}">Select Item</a>
     <br>
     <br>
     {{/each}}

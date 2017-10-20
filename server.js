@@ -169,11 +169,9 @@ app.get('/gallery/:id', (req, res) => {
 
 app.get('/gallery/:id/edit', isAuthenticated, (req, res) => {
   const id = req.params.id;
-console.log("REQ USER :",req.user);
 
     return artworks.findById(id)
     .then((artwork) => {
-      console.log("artwork :", artwork.userId);
        if(req.user.id === artwork.userId){
       let locals ={
         artwork : artwork
@@ -189,11 +187,13 @@ app.put('/gallery/:id/edit', isAuthenticated, (req, res) => {
   const id = req.params.id;
 
   return artworks.update({author : data.author, link : data.link, description : data.description}, { where : {id : id}})
-    .then((data) => {
+    .then((artwork) => {
+      if(req.user.id === artwork.userId){
       let locals ={
-        data : data
+        artwork : artwork
       };
       return res.redirect('/gallery');
+     }
     })
     .catch(err => {
       console.log(err);
@@ -203,13 +203,16 @@ app.put('/gallery/:id/edit', isAuthenticated, (req, res) => {
 
 app.delete('/gallery/:id/edit', isAuthenticated, (req, res) => {
   const id = req.params.id;
+  console.log("REQPARAMSID",id);
 
   artworks.destroy({where : {id : id}})
-    .then((data) => {
+    .then((artwork) => {
+      if(req.user.id === artwork.userId){
       let locals ={
-        data : data
+        artwork : artwork
       };
       return res.redirect('/gallery');
+      }
     })
     .catch(err => {
       console.log(err);

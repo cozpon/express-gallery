@@ -1,12 +1,12 @@
 <h1>Edit Artwork / PUT / Delete</h1>
 
-<form action="/gallery/{{data.id}}/edit?_method=PUT" method= "POST">
-  Author : <input type='text' name='author' value= {{data.author}}><br>
-  Link : <input type="text" name ='link' value= {{data.link}}><br>
-  Description : <input type="text" name= 'description' value={{data.description}}><br>
+<form action="/gallery/{{artwork.id}}/edit?_method=PUT" method= "POST">
+  Author : <input type='text' name='author' value= {{artwork.author}}><br>
+  Link : <input type="text" name ='link' value= {{artwork.link}}><br>
+  Description : <input type="text" name= 'description' value={{artwork.description}}><br>
   <input type="submit" value= 'Edit'><br>
 </form>
-<form method="POST" action="/gallery/{{data.id}}/edit?_method=DELETE">
+<form method="POST" action="/gallery/{{artwork.id}}/edit?_method=DELETE">
   <button type="submit">Delete</button>
 </form>
 

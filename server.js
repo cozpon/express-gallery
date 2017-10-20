@@ -146,7 +146,8 @@ app.get('/gallery', (req, res) => {
   return artworks.findAll({order : [['id', 'ASC']]})
     .then((data) => {
       let locals ={
-        data : data
+        data : data,
+        expressFlash: req.flash('success')
       };
       return res.render('partials/gallery/index', locals);
     })
@@ -233,17 +234,12 @@ app.use(function(req, res, next){
 });
 
 // Route that creates a flash message using the express-flash module
-app.all('/', function( req, res ) {
+app.get('/flash', function( req, res ) {
     req.flash('success', 'This is a flash message using the express-flash module.');
     res.redirect('/gallery');
-    console.log(req.flash());
 });
 
 
-// Route that incorporates flash messages from either req.flash(type) or res.locals.flash
-app.all('/gallery', function( req, res ) {
-    res.send(req.flash('success'));
-});
 
 
 app.listen(port, () => {

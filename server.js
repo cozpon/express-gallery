@@ -241,8 +241,8 @@ app.all('/', function( req, res ) {
 
 
 // Route that incorporates flash messages from either req.flash(type) or res.locals.flash
-app.all('/', function( req, res ) {
-    res.render('/gallery', {expressFlash: req.flash('success')});
+app.all('/gallery', function( req, res ) {
+    res.send(req.flash('success'));
 });
 
 

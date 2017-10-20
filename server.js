@@ -1,8 +1,14 @@
 //jshint esversion:6
 const express = require('express');
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
 const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
+const session = require('express-session');
+const bcrypt = require('bcrypt');
+
+const saltRounds = 12; //about 3 sec.
 const port = process.env.PORT || 4567;
 const app = express();
 
@@ -17,16 +23,114 @@ app.engine('.hbs', exphbs ({
     }));
 app.set('view engine', '.hbs');
 
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: false
+}));
+
 app.use(express.static('public'));
 
-const Gallery = db.gallery;
+const artworks = db.artworks;
+const users = db.users;
 
 app.use(bodyParser.urlencoded({ extend : true }));
 
-app.post('/gallery', (req, res) => {
+///Passport shish
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.serializeUser((user,done) => {
+  console.log('serializing');
+  return done(null, {
+    id: user.id,
+    username: user.username
+  });
+});
+
+passport.deserializeUser((user, done) => {
+  console.log('deserializing');
+  db.users.findOne({ where: {id: user.id}})
+    .then(user => {
+      return done(null, {
+        id: user.id,
+        username: user.username
+
+      });
+    });
+});
+
+passport.use(new LocalStrategy(function (username, password, done) {
+  db.users.findOne({where: {username : username}})
+  .then(user => {
+    if(user === null) {
+      return done(null, false, {message: 'bad username or password'});
+    }else{
+      bcrypt.compare(password, user.password)
+      .then(res => {
+        console.log(res);
+        if(res) {return done(null, user);
+        }else{
+          return done(null, false, {message: 'bad username or password'});
+        }
+      });
+    }
+  })
+  .catch(err => {
+    console.log('error : ', err);
+  });
+}));
+
+//routes
+app.post('/login', passport.authenticate('local', {
+  successRedirect: '/gallery',
+  failureRedirect: '/login'
+}));
+
+app.get('/logout', (req, res) => {
+  req.logout();
+  res.sendStatus(200);
+});
+
+app.post('/register', (req,res) => {
+  bcrypt.genSalt(saltRounds, function (err, salt) {
+    bcrypt.hash(req.body.password, salt, function (err, hash) {
+      db.users.create({
+        username: req.body.username,
+        password: hash
+      })
+      .then((user) => {
+        console.log(user);
+        res.redirect('/');
+      })
+      .catch((err) => {return res.send('Stupid username');});
+    });
+  });
+});
+
+
+//secure route for logged in users
+function isAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {next();}
+  else {res.redirect('/');}
+}
+
+app.get('/secret', isAuthenticated, (req,res) => {
+  console.log('req.user',req.user);
+  console.log('req.user.id', req.user.id);
+  console.log('req.user.username',req.user.username);
+  console.log('req.user.password',req.user.password);
+  res.send('you found the secret');
+});
+
+
+app.post('/gallery', isAuthenticated, (req, res) => {
   const data = req.body;
 
-  let result = Gallery.create({author : data.author, link : data.link, description : data.description})
+  console.log(data);
+  console.log(req, "REQ");
+
+  let result = artworks.create({author : data.author, link : data.link, description : data.description, userId: req.user.id})
     .then((data) => {
       return res.render('partials/gallery/index', data);
     })
@@ -38,7 +142,7 @@ app.post('/gallery', (req, res) => {
 
 app.get('/gallery', (req, res) => {
 
-  return Gallery.findAll({order : [['id', 'ASC']]})
+  return artworks.findAll({order : [['id', 'ASC']]})
     .then((data) => {
       let locals ={
         data : data
@@ -57,7 +161,7 @@ app.get('/gallery/new', (req, res) => {
 
 app.get('/gallery/:id', (req, res) => {
   const id = req.params.id;
-  return Gallery.findById(id)
+  return artworks.findById(id)
     .then((data) => {
       let locals ={
         data : data
@@ -66,24 +170,30 @@ app.get('/gallery/:id', (req, res) => {
     });
 });
 
-app.get('/gallery/:id/edit', (req, res) => {
+app.get('/gallery/:id/edit', isAuthenticated, (req, res) => {
   const id = req.params.id;
-
-  return Gallery.findById(id)
+console.log(req.userId);
+console.log(users.id);
+  if(req.userId === users.id) {
+    return artworks.findById(id)
     .then((data) => {
       let locals ={
         data : data
       };
       return res.render('partials/gallery/edit', locals);
     });
+  }else{
+    res.redirect(403, '/login');
+  }
+
 });
 
-app.put('/gallery/:id/edit', (req, res) => {
+app.put('/gallery/:id/edit', isAuthenticated, (req, res) => {
   const data = req.body;
   const id = req.params.id;
 
 
-  return Gallery.update({author : data.author, link : data.link, description : data.description}, { where : {id : id}})
+  return artworks.update({author : data.author, link : data.link, description : data.description}, { where : {id : id}})
     .then((data) => {
       let locals ={
         data : data
@@ -96,10 +206,10 @@ app.put('/gallery/:id/edit', (req, res) => {
     });
 });
 
-app.delete('/gallery/:id/edit', (req, res) => {
+app.delete('/gallery/:id/edit', isAuthenticated, (req, res) => {
   const id = req.params.id;
 
-  Gallery.destroy({where : {id : id}})
+  artworks.destroy({where : {id : id}})
     .then((data) => {
       let locals ={
         data : data

@@ -188,16 +188,16 @@ app.put('/gallery/:id/edit', isAuthenticated, (req, res) => {
 
   return artworks.update({author : data.author, link : data.link, description : data.description}, { where : {id : id}})
     .then((artwork) => {
-      if(req.user.id === artwork.userId){
       let locals ={
         artwork : artwork
       };
+
       return res.redirect('/gallery');
-     }
+
     })
     .catch(err => {
       console.log(err);
-      res.send(err);
+      return res.send(err);
     });
 });
 
@@ -205,20 +205,19 @@ app.delete('/gallery/:id/edit', isAuthenticated, (req, res) => {
   const id = req.params.id;
   console.log("REQPARAMSID",id);
 
-  artworks.destroy({where : {id : id}})
-    .then((artwork) => {
-      if(req.user.id === artwork.userId){
-      let locals ={
-        artwork : artwork
-      };
-      return res.redirect('/gallery');
-      }
-    })
-    .catch(err => {
-      console.log(err);
-      res.send(err);
-    });
-});
+
+  return artworks.destroy({where : {id : id}})
+      .then((artwork) => {
+        let locals ={
+          artwork : artwork
+        };
+        return res.redirect('/gallery');
+      })
+      .catch(err => {
+        console.log(err);
+        return res.send(err);
+      });
+  });
 
 
 app.listen(port, () => {

@@ -101,7 +101,7 @@ app.post('/register', (req,res) => {
       })
       .then((user) => {
         console.log(user);
-        res.redirect('/');
+        res.redirect('/gallery');
       })
       .catch((err) => {return res.send('Stupid username');});
     });
@@ -112,7 +112,7 @@ app.post('/register', (req,res) => {
 //secure route for logged in users
 function isAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {next();}
-  else {res.redirect('/');}
+  else {res.redirect('/login.html');}
 }
 
 app.get('/secret', isAuthenticated, (req,res) => {
@@ -126,9 +126,6 @@ app.get('/secret', isAuthenticated, (req,res) => {
 
 app.post('/gallery', isAuthenticated, (req, res) => {
   const data = req.body;
-
-  console.log(data);
-  console.log(req, "REQ");
 
   let result = artworks.create({author : data.author, link : data.link, description : data.description, userId: req.user.id})
     .then((data) => {
@@ -172,26 +169,24 @@ app.get('/gallery/:id', (req, res) => {
 
 app.get('/gallery/:id/edit', isAuthenticated, (req, res) => {
   const id = req.params.id;
-console.log(req.userId);
-console.log(users.id);
-  if(req.userId === users.id) {
+console.log("REQ USER :",req.user);
+
     return artworks.findById(id)
-    .then((data) => {
+    .then((artwork) => {
+      console.log("artwork :", artwork.userId);
+       if(req.user.id === artwork.userId){
       let locals ={
-        data : data
+        artwork : artwork
+
       };
       return res.render('partials/gallery/edit', locals);
-    });
-  }else{
-    res.redirect(403, '/login');
-  }
-
+    }
+  });
 });
 
 app.put('/gallery/:id/edit', isAuthenticated, (req, res) => {
   const data = req.body;
   const id = req.params.id;
-
 
   return artworks.update({author : data.author, link : data.link, description : data.description}, { where : {id : id}})
     .then((data) => {

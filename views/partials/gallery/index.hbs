@@ -6,7 +6,8 @@
     {{#each data}}
     <li>Id : {{id}}</li>
     <li>Author : {{author}}</li>
-    <li>Link : {{link}}</li>
+    <img src="{{link}}" width="82" height="86" title="White flower" alt="Flower">
+
     <li>Description : {{description}}</li>
     <a href="http://localhost:4567/gallery/{{id}}">Select Item</a>
     <br>
@@ -17,7 +18,7 @@
 </div>
 
 <a href="http://localhost:4567/gallery/new">Create New Artwork</a>
-
+{{!--
 <h3> Flash messages in Express 4 </h3>
 <p><a href="http://localhost:4567/express-flash">Click here</a> for a flash message using the express-flash module.</p>
 <p><a href="http://localhost:4567/session-flash">Click here</a> for a flash message using custom middleware</p>
@@ -32,4 +33,4 @@
         <strong>FLASH!</strong> {{ sessionFlash.message }}
     </div>
 {{/if}}
-
+ --}}

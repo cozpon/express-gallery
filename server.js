@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
 const session = require('express-session');
 const bcrypt = require('bcrypt');
+const flash = require('express-flash');
 
 const saltRounds = 12; //about 3 sec.
 const port = process.env.PORT || 4567;
@@ -29,6 +30,8 @@ app.use(session({
   saveUninitialized: false
 }));
 
+app.use(flash());
+
 app.use(express.static('public'));
 
 const artworks = db.artworks;
@@ -36,7 +39,7 @@ const users = db.users;
 
 app.use(bodyParser.urlencoded({ extend : true }));
 
-///Passport shish
+///start authentication
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -122,20 +125,21 @@ app.get('/secret', isAuthenticated, (req,res) => {
   console.log('req.user.password',req.user.password);
   res.send('you found the secret');
 });
-
+//////end authentication
 
 app.post('/gallery', isAuthenticated, (req, res) => {
   const data = req.body;
 
-  let result = artworks.create({author : data.author, link : data.link, description : data.description, userId: req.user.id})
+  return artworks.create({author : data.author, link : data.link, description : data.description, userId: req.user.id})
     .then((data) => {
-      return res.render('partials/gallery/index', data);
+      return res.redirect('/gallery');
     })
     .catch(err => {
       console.log(err);
       return res.send(err);
     });
 });
+
 
 app.get('/gallery', (req, res) => {
 
@@ -218,6 +222,28 @@ app.delete('/gallery/:id/edit', isAuthenticated, (req, res) => {
         return res.send(err);
       });
   });
+
+
+// Custom flash middleware -- from Ethan Brown's book, 'Web Development with Node & Express'
+app.use(function(req, res, next){
+    // if there's a flash message in the session request, make it available in the response, then delete it
+    res.locals.sessionFlash = req.session.sessionFlash;
+    delete req.session.sessionFlash;
+    next();
+});
+
+// Route that creates a flash message using the express-flash module
+app.all('/', function( req, res ) {
+    req.flash('success', 'This is a flash message using the express-flash module.');
+    res.redirect('/gallery');
+    console.log(req.flash());
+});
+
+
+// Route that incorporates flash messages from either req.flash(type) or res.locals.flash
+app.all('/', function( req, res ) {
+    res.render('/gallery', {expressFlash: req.flash('success')});
+});
 
 
 app.listen(port, () => {

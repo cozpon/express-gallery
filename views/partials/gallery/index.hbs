@@ -23,8 +23,7 @@
 <p><a href="http://localhost:4567/session-flash">Click here</a> for a flash message using custom middleware</p>
 <p>Refresh to clear the flash message.</p>
 
-<div>
-  {{#if expressFlash}}
+{{#if expressFlash}}
     <p><strong>FLASH!</strong> {{ expressFlash }}</p>
 {{/if}}
 
@@ -33,4 +32,4 @@
         <strong>FLASH!</strong> {{ sessionFlash.message }}
     </div>
 {{/if}}
-</div>
+

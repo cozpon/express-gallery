@@ -24,6 +24,7 @@
     "body-parser": "^1.18.2",
     "browser-sync": "^2.18.13",
     "connect-flash": "^0.1.1",
+    "connect-redis": "^3.3.2",
     "express": "^4.16.2",
     "express-flash": "git://github.com/RGBboy/express-flash.git",
     "express-handlebars": "^3.0.0",

@@ -6,8 +6,37 @@ body {
   //karla font for header
 }
 
-.header {
+.title {
+  font-family: 'karla', sans-serif;
+  color: #666; // 666.... get it??
+  border-top: 1px dotted #666;
+  width: 782px;
+  display: flex;
+  margin-left: 255px;
+  // margin-left: auto;
+  // margin-right: auto;
+  justify-content: center;
 
+ .blurb {
+    flex-direction: row;
+    text-overflow: ellipsis;
+    width: 200px;
+    padding-left: 50px;
+    font-size: 8px;
+    border-left: 1px dotted #666; // hahaha again we did it!
+  }
+
+ .anarkyTitle {
+
+    display: flex;
+    flex-direction: row;
+    padding-right: 50px;
+  }
+
+}
+
+
+.header {
   @media only screen and (min-width: 600px) {
   height: 250px;
   width: 782px;
@@ -38,7 +67,10 @@ body {
 .flex-container {
 
   @media only screen and (min-width: 600px) {
-
+    display: flex;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
     }
 
   .art-container {
@@ -48,7 +80,7 @@ body {
       justify-content: space-around;
       flex-flow: row wrap;
       width:800px;
-      margin-left: 10.2%;
+      padding: 1.5%;
 
     }
 

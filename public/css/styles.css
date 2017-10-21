@@ -2,6 +2,26 @@ body {
   background-image: url("../images/anarchy99.jpg");
   font-family: 'Roboto', sans-serif; }
 
+.title {
+  font-family: 'karla', sans-serif;
+  color: #666;
+  border-top: 1px dotted #666;
+  width: 782px;
+  display: flex;
+  margin-left: 255px;
+  justify-content: center; }
+  .title .blurb {
+    flex-direction: row;
+    text-overflow: ellipsis;
+    width: 200px;
+    padding-left: 50px;
+    font-size: 8px;
+    border-left: 1px dotted #666; }
+  .title .anarkyTitle {
+    display: flex;
+    flex-direction: row;
+    padding-right: 50px; }
+
 @media only screen and (min-width: 600px) {
   .header {
     height: 250px;
@@ -19,12 +39,19 @@ body {
   justify-content: center; }
 
 @media only screen and (min-width: 600px) {
+  .flex-container {
+    display: flex;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto; } }
+
+@media only screen and (min-width: 600px) {
   .flex-container .art-container {
     display: flex;
     justify-content: space-around;
     flex-flow: row wrap;
     width: 800px;
-    margin-left: 10.2%; } }
+    padding: 1.5%; } }
 
 @media only screen and (min-width: 600px) {
   .flex-container .art-container .art-item {

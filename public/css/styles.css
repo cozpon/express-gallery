@@ -2,28 +2,31 @@ body {
   background-image: url("../images/anarchy99.jpg");
   font-family: 'Roboto', sans-serif; }
 
-.art-container {
-  display: flex;
-  font-size: 10px;
-  flex-wrap: wrap;
-  align-content: center; }
-
-.art-container .art-item {
-  flex: 1 0 400px;
-  margin: auto;
-  margin-left: 20px;
-  margin-top: 40px; }
-
-.art-container .art-item .image {
-  height: 300px;
-  width: 500px;
-  overflow: hidden;
-  padding: 20px; }
-
 .header {
   height: 400px;
-  width: 1000px;
+  width: 800px;
   overflow: hidden; }
 
 #headerImage {
-  position: center; }
+  position: center;
+  display: inline-block; }
+
+@media only screen and (min-width: 600px) {
+  .flex-container .art-container {
+    display: flex;
+    justify-content: space-between;
+    flex-flow: row wrap; } }
+
+@media only screen and (min-width: 600px) {
+  .flex-container .art-container .art-item {
+    box-sizing: border-box;
+    width: 31%; } }
+
+@media only screen and (min-width: 600px) {
+  .flex-container .art-container .art-item .art-image {
+    max-width: 200px;
+    max-height: 50%;
+    display: block;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat; } }

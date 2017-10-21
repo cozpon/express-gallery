@@ -4,6 +4,7 @@
 <div class="collection">
     <div class="header">
         <img id="headerImage" src="http://payload309.cargocollective.com/1/12/398889/8499741/AAAARicky_11_1000.jpg" alt="French Plús" >
+
     </div>
 </div>
 
@@ -13,13 +14,13 @@
     {{#each data}}
         <div class="art-item">
             <div class="image">
-               <img src="{{link}}" title="White flower" alt="Flower">
+               <div class="art-image" style="height: 200px; width: 400px; background-image : url({{link}});"></div>
             </div>
         <p>Author : {{author}}</p><br>
         <a href="www.anarchistsunite.com">www.anarchistsunite.com</a>
         <a href="http://localhost:4567/gallery/{{id}}">Select Item</a><br>
         </div>
-        <br>
+
     {{/each}}
     </div>
 </div>

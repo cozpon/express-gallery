@@ -1,6 +1,29 @@
 body {
-  background-image: url("../images/anarchy99.jpg"); }
+  background-image: url("../images/anarchy99.jpg");
+  font-family: 'Roboto', sans-serif; }
 
-.Artwork {
-  position: absolute;
-  left: 800px; }
+.art-container {
+  display: flex;
+  font-size: 10px;
+  flex-wrap: wrap;
+  align-content: center; }
+
+.art-container .art-item {
+  flex: 1 0 400px;
+  margin: auto;
+  margin-left: 20px;
+  margin-top: 40px; }
+
+.art-container .art-item .image {
+  height: 300px;
+  width: 500px;
+  overflow: hidden;
+  padding: 20px; }
+
+.header {
+  height: 400px;
+  width: 1000px;
+  overflow: hidden; }
+
+#headerImage {
+  position: center; }

@@ -1,24 +1,33 @@
-<h1>All ArtWork</h1>
+<h1>_ANARKY</h1>
 
+{{!-- header photo --}}
 <div class="collection">
-  <ul class="Artwork">
-    <br>
-    {{#each data}}
-    <li>Id : {{id}}</li>
-    <li>Author : {{author}}</li>
-    <img src="{{link}}" width="82" height="86" title="White flower" alt="Flower">
-
-    <li>Description : {{description}}</li>
-    <a href="http://localhost:4567/gallery/{{id}}">Select Item</a>
-    <br>
-    <br>
-    {{/each}}
-
-  </ul>
+    <div class="header">
+        <img id="headerImage" src="http://payload309.cargocollective.com/1/12/398889/8499741/AAAARicky_11_1000.jpg" alt="French Plús" >
+    </div>
 </div>
+
+{{!-- body photos --}}
+<div class="flex-container">
+    <div class="art-container">
+    {{#each data}}
+        <div class="art-item">
+            <div class="image">
+               <img src="{{link}}" title="White flower" alt="Flower">
+            </div>
+        <p>Author : {{author}}</p><br>
+        <a href="www.anarchistsunite.com">www.anarchistsunite.com</a>
+        <a href="http://localhost:4567/gallery/{{id}}">Select Item</a><br>
+        </div>
+        <br>
+    {{/each}}
+    </div>
+</div>
+
 
 <a href="http://localhost:4567/gallery/new">Create New Artwork</a>
 
+<br>
 <h3> Flash messages in Express 4 </h3>
 <p><a href="http://localhost:4567/flash">Click here</a> for a flash message using the express-flash module.</p>
 

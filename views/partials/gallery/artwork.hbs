@@ -1,18 +1,44 @@
-<h1>One ArtWork</h1>
+{{>header}}
+
+<h1>_One ArtWork</h1>
+
+<div class="bigger-container">
+<div class="content">
 
 <div class="collection">
-  <ul class="Artwork">
+  <div class="single-artwork">
     <br>
     <li>Id : {{data.id}}</li>
     <li>Author : {{data.author}}</li>
-     <img src="{{data.link}}" width="600" height="600" title="White flower" alt="Flower">
+
+    <div class="image">
+      <img class="each-image" src="{{data.link}}" title="White flower" alt="Flower">
+    </div>
+
     <li>Description : {{data.description}}</li>
-    <a href="http://localhost:4567/gallery/{{data.id}}/edit">Edit Item</a>
+    <a href="http://localhost:4567/gallery/{{data.id}}/edit"style='color: #666;'>Edit Item</a>
     <br>
     <br>
+  </div>
 
+</div>
 
-  </ul>
+<div class="sidepanel">
+  <div class="singlepanel-container">
+    {{#each data}}
+      <div class="single-item">
+          <div class="single-image">
+            <a href="http://localhost:4567/gallery/{{id}}">
+              <img class="art-image" width="200"src="{{link}}" alt="French Plús" >
+            </a>
+            </div>
+        <p>{{author}} ---</p><br>
+        <a href="www.anarchistsunite.com" style='color: #666;'>www.anarchistsunite.com</a>
+        </div>
+    {{/each}}
+    </div>
+</div>
+</div>
 </div>
 
 <a href="http://localhost:4567/gallery/new">Create New Artwork</a>

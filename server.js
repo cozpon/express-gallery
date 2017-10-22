@@ -8,6 +8,7 @@ const methodOverride = require('method-override');
 const session = require('express-session');
 const bcrypt = require('bcrypt');
 const flash = require('express-flash');
+const path = require('path');
 
 const saltRounds = 12; //about 3 sec.
 const port = process.env.PORT || 4567;
@@ -32,7 +33,7 @@ app.use(session({
 
 app.use(flash());
 
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'public')));
 
 const artworks = db.artworks;
 const users = db.users;

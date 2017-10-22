@@ -7,6 +7,11 @@
   </div>
 </div>
 
+
+{{#if expressFlash}}
+    <p> {{{ expressFlash }}}</p>
+{{/if}}
+
 {{!-- login --}}
 <a href="/login.html" style='color: #666;'>Login</a><br>
 <a href="/register.html" style='color: #666;'>Register</a><br>
@@ -39,13 +44,4 @@
 </div>
 
 
-<br>
-<h3> Flash messages in Express 4 </h3>
-<p><a href="http://localhost:4567/flash" style='color: #666;'>Click here</a> for a flash message using the express-flash module.</p>
-
-<p>Refresh to clear the flash message.</p>
-
-{{#if expressFlash}}
-    <p><strong>FLASH!</strong> {{ expressFlash }}</p>
-{{/if}}
 

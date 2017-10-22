@@ -98,7 +98,7 @@ app.post('/login', passport.authenticate('local', {
 
 app.get('/logout', (req, res) => {
   req.logout();
-  res.redirect('/gallery');
+  res.redirect('/flash');
 });
 
 app.post('/register', (req,res) => {
@@ -151,10 +151,6 @@ app.get('/gallery', (req, res) => {
       return res.send(err);
     });
 });
-
-
-
-
 ///not logged in end
 
 
@@ -276,26 +272,14 @@ app.delete('/gallery/:id/edit', isAuthenticated, (req, res) => {
 
 
 
-///flash
 
-// Custom flash middleware -- from Ethan Brown's book, 'Web Development with Node & Express'
-app.use(function(req, res, next){
-    // if there's a flash message in the session request, make it available in the response, then delete it
-    res.locals.sessionFlash = req.session.sessionFlash;
-    delete req.session.sessionFlash;
-    next();
-});
 
 // Route that creates a flash message using the express-flash module
 app.get('/flash', function( req, res ) {
-    req.flash('success', 'This is a flash message using the express-flash module.');
+    req.flash('success', '<iframe width="560" height="315" src="https://www.youtube.com/embed/joMyIF4uvMA?rel=0&autoplay=1" frameborder="0" allowfullscreen></iframe>');
     res.redirect('/gallery');
 });
-
-
-
-
-
+///flash end
 
 
 app.listen(port, () => {

@@ -8,9 +8,8 @@
 </div>
 
 {{!-- login --}}
-<a href="/login.html" style='color: #666;'>Login</a><br>
-<a href="/register.html" style='color: #666;'>Register</a><br>
-
+<a href="/gallery/new" style='color: #666;'>Create New Artwork</a><br>
+{{>logout}}
 
 
 
@@ -27,7 +26,7 @@
     {{#each data}}
       <div class="art-item">
           <div class="image">
-            <a href="http://localhost:4567/gallery/{{id}}">
+            <a href="http://localhost:4567/loggedIn/{{id}}">
               <img class="art-image" src="{{link}}" alt="French Plús" >
             </a>
             </div>

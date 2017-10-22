@@ -92,13 +92,13 @@ passport.use(new LocalStrategy(function (username, password, done) {
 
 //routes
 app.post('/login', passport.authenticate('local', {
-  successRedirect: '/gallery',
+  successRedirect: '/loggedIn',
   failureRedirect: '/login'
 }));
 
 app.get('/logout', (req, res) => {
   req.logout();
-  res.sendStatus(200);
+  res.redirect('/gallery');
 });
 
 app.post('/register', (req,res) => {
@@ -133,20 +133,9 @@ app.get('/secret', isAuthenticated, (req,res) => {
 });
 //////end authentication
 
-app.post('/gallery', isAuthenticated, (req, res) => {
-  const data = req.body;
-
-  return artworks.create({author : data.author, link : data.link, description : data.description, userId: req.user.id})
-    .then((data) => {
-      return res.redirect('/gallery');
-    })
-    .catch(err => {
-      console.log(err);
-      return res.send(err);
-    });
-});
 
 
+///not logged in
 app.get('/gallery', (req, res) => {
 
   return artworks.findAll({order : [['id', 'ASC']]})
@@ -163,7 +152,60 @@ app.get('/gallery', (req, res) => {
     });
 });
 
-app.get('/gallery/new', (req, res) => {
+
+
+
+///not logged in end
+
+
+
+
+///logged in
+
+app.get('/loggedIn', isAuthenticated,(req, res) => {
+
+  return artworks.findAll({order : [['id', 'ASC']]})
+    .then((data) => {
+      let locals ={
+        data : data,
+        expressFlash: req.flash('success')
+      };
+      return res.render('partials/loggedIn/index', locals);
+    })
+    .catch(err => {
+      console.log(err);
+      return res.send(err);
+    });
+});
+
+
+
+app.get('/loggedIn/:id', isAuthenticated, (req, res) => {
+  const id = req.params.id;
+  return artworks.findById(id)
+    .then((data) => {
+      let locals ={
+        data : data
+      };
+      return res.render('partials/loggedIn/artwork', locals);
+    });
+});
+
+app.post('/gallery', isAuthenticated, (req, res) => {
+  const data = req.body;
+
+  return artworks.create({author : data.author, link : data.link, description : data.description, userId: req.user.id})
+    .then((data) => {
+      return res.redirect('/loggedIn');
+    })
+    .catch(err => {
+      console.log(err);
+      return res.send(err);
+    });
+});
+
+app.get('/gallery/new', isAuthenticated, (req, res) => {
+  console.log('in GAl new');
   return res.render('partials/gallery/new');
 });
 
@@ -192,6 +234,7 @@ app.get('/gallery/:id/edit', isAuthenticated, (req, res) => {
     }
   });
 });
+
 
 app.put('/gallery/:id/edit', isAuthenticated, (req, res) => {
   const data = req.body;
@@ -231,6 +274,10 @@ app.delete('/gallery/:id/edit', isAuthenticated, (req, res) => {
   });
 
 
+
+
+///flash
+
 // Custom flash middleware -- from Ethan Brown's book, 'Web Development with Node & Express'
 app.use(function(req, res, next){
     // if there's a flash message in the session request, make it available in the response, then delete it
@@ -244,6 +291,9 @@ app.get('/flash', function( req, res ) {
     req.flash('success', 'This is a flash message using the express-flash module.');
     res.redirect('/gallery');
 });
+
+
+
 
 
 

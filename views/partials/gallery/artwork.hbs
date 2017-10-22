@@ -3,41 +3,39 @@
 <h1>_One ArtWork</h1>
 
 <div class="bigger-container">
-<div class="content">
+  <div class="content">
 
-<div class="collection">
-  <div class="single-artwork">
-    <br>
-    <p>{{data.author}}</p>
+    <div class="collection">
+      <div class="single-artwork">
+        <br>
+        <p>{{data.author}}</p>
 
-    <div class="image">
-      <img class="each-image" src="{{data.link}}" title="White flower" alt="Flower">
-    </div>
-
-    <li>Description : {{data.description}}</li>
-    <a href="http://localhost:4567/gallery/{{data.id}}/edit"style='color: #666;'>Edit Item</a>
-    <br>
-    <br>
-  </div>
-
-</div>
-
-<div class="sidepanel">
-  <div class="singlepanel-container">
-    {{#each data}}
-      <div class="single-item">
-          <div class="single-image">
-            <a href="http://localhost:4567/gallery/{{id}}">
-              <img class="art-image" width="200"src="{{link}}" alt="French Plús" >
-            </a>
-            </div>
-        <p>{{author}} ---</p><br>
-        <a href="www.anarchistsunite.com" style='color: #666;'>www.anarchistsunite.com</a>
+        <div class="image">
+          <img class="each-image" src="{{data.link}}" title="White flower" alt="Flower">
         </div>
-    {{/each}}
+
+        <li>Description : {{data.description}}</li>
+        <br>
+        <br>
+      </div>
+
     </div>
-</div>
-</div>
+
+    <div class="sidepanel">
+      <div class="singlepanel-container">
+        {{#each data}}
+          <div class="single-item">
+              <div class="single-image">
+                <a href="http://localhost:4567/gallery/{{id}}">
+                  <img class="art-image" width="200"src="{{link}}" alt="French Plús" >
+                </a>
+                </div>
+            <p>{{author}} ---</p><br>
+            <a href="www.anarchistsunite.com" style='color: #666;'>www.anarchistsunite.com</a>
+            </div>
+        {{/each}}
+        </div>
+    </div>
+  </div>
 </div>
 
-<a href="http://localhost:4567/gallery/new" style='color: #666;'>Create New Artwork</a>

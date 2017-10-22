@@ -8,7 +8,11 @@ const methodOverride = require('method-override');
 const session = require('express-session');
 const bcrypt = require('bcrypt');
 const flash = require('express-flash');
+
 const path = require('path');
+
+const redis = require('connect-redis')(session);
+
 
 const saltRounds = 12; //about 3 sec.
 const port = process.env.PORT || 4567;
@@ -26,6 +30,7 @@ app.engine('.hbs', exphbs ({
 app.set('view engine', '.hbs');
 
 app.use(session({
+  store: new redis(),
   secret: 'keyboard cat',
   resave: false,
   saveUninitialized: false

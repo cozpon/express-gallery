@@ -39,50 +39,50 @@ a:hover {
 
 
 .header {
+
   @media only screen and (min-width: 600px) {
   height: 250px;
-  width: 782px;
+  width: 100%;
+  max-width: 782px;
+
   overflow: hidden;
   display: flex;
-
-  // flex-flow: row wrap;
   margin-left: auto;
   margin-right: auto;
+
   }
 }
 
 #headerImage {
-  // align-content: center;
-  height: 100%;
-  width: 100%;
+  height: 50%;
+  width: 50%;
+
+  @media only screen and (min-width: 600px) {
+  max-height: 100%;
+  max-width: 100%;
+  height: 250px;
+  width: 782px;
   object-fit: cover;
   display:flex;
   justify-content: center;
-  @media only screen and (min-width: 600px) {
 
   }
 }
 
 //bigger container
 .bigger-container {
-  //single artwork
-  display: flex;
+  .content {
+    display: flex;
+
 .collection {
   display: flex;
   justify-content: center;
-  align-items: center;
-  flex: 0 1 60%;
-  float: left;
-  .single-artwork {
 
+  .single-artwork {
+      margin-left: 15%;
     .image {
       @media only screen and (min-width: 600px){
-      display: flex;
-      width: 600px;
-      height: 600px;
-      justify-content: center;
-      align-items: center;
-
+      width: 90%;
     }
       .each-image {
         @media only screen and (min-width: 600px){
@@ -98,21 +98,22 @@ a:hover {
     }
   }
 }
+}
 
 ///sidepanel
 
 .sidepanel {
-  display: flex;
-  width: 200px;
+
+  width: 22%;
   background-color: pink;
-  justify-content: space-between;
+
   .sidepanel-container {
 
     .single-item {
        @media only screen and (min-width: 600px){
         display: flex;
         width: 200px;
-        box-sizing: border-box;
+
       }
       .single-image {
 
@@ -145,6 +146,7 @@ a:hover {
     }
 
   .art-container {
+    padding: 1.5%;
 
     @media only screen and (min-width: 600px) {
       display: flex;
@@ -156,12 +158,18 @@ a:hover {
     }
 
     .art-item {
+      justify-content: center;
       @media only screen and (min-width: 600px) {
+        padding-top: 5px;
         box-sizing: border-box;
         width: 31%;
       }
 
      .art-image {
+
+          height: 50%;
+          width: 50%;
+
         @media only screen and (min-width: 600px) {
           height: 200px;
           width: 300px;

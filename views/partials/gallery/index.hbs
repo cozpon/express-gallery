@@ -9,8 +9,8 @@
 
 {{!-- login --}}
 <a href="/login.html" style='color: #666;'>Login</a><br>
-<a href="/register.html" style='color: #666;'>Register</a>
-
+<a href="/register.html" style='color: #666;'>Register</a><br>
+<a href="http://localhost:4567/gallery/new" style='color: #666;'>Create New Artwork</a>
 
 
 
@@ -31,15 +31,13 @@
               <img class="art-image" src="{{link}}" alt="French Plús" >
             </a>
             </div>
-        <p>{{author}} ---</p><br>
-        <a href="www.anarchistsunite.com" style='color: #666;'>www.anarchistsunite.com</a>
+        <p style='color: #666; font-size: 12px;'>{{author}} ---</p>
+        <a href="www.anarchistsunite.com" style='color: #666; font-size: 12px;'>www.anarchistsunite.com</a>
         </div>
     {{/each}}
     </div>
 </div>
 
-
-<a href="http://localhost:4567/gallery/new" style='color: #666;'>Create New Artwork</a>
 
 <br>
 <h3> Flash messages in Express 4 </h3>

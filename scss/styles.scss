@@ -11,6 +11,9 @@ a:link {
 a:hover {
   color: black;
 }
+a:visited {
+  color:#666;
+}
 
 .title {
   font-family: 'karla', sans-serif;
@@ -189,3 +192,11 @@ a:hover {
   }
 }
 
+
+
+.flash {
+  text-align: center;
+  font-size: 20px;
+  font-family: 'Roboto', sans-serif;
+  color: #666;
+}

@@ -7,8 +7,11 @@
   </div>
 </div>
 
-
-
+<div class="flash">
+{{#if expressFlash}}
+    <p> {{{ expressFlash }}}</p>
+{{/if}}
+</div>
 
 {{!-- login --}}
 <a href="/login.html" style='color: #666;'>Login</a><br>

@@ -8,6 +8,9 @@ a:link {
 a:hover {
   color: black; }
 
+a:visited {
+  color: #666; }
+
 .title {
   font-family: 'karla', sans-serif;
   color: #666;
@@ -118,3 +121,9 @@ a:hover {
           background-repeat: no-repeat;
           overflow: hidden;
           object-fit: cover; } }
+
+.flash {
+  text-align: center;
+  font-size: 20px;
+  font-family: 'Roboto', sans-serif;
+  color: #666; }

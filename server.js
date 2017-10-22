@@ -98,7 +98,7 @@ app.post('/login', passport.authenticate('local', {
 
 app.get('/logout', (req, res) => {
   req.logout();
-  res.redirect('/gallery');
+  res.redirect('/flash');
 });
 
 app.post('/register', (req,res) => {
@@ -277,11 +277,11 @@ app.delete('/gallery/:id/edit', isAuthenticated, (req, res) => {
 // Route that creates a flash message using the express-flash module
 app.get('/flash', function( req, res ) {
 
-    req.flash('success', '<iframe width="560" height="315" src="https://www.youtube.com/embed/joMyIF4uvMA?rel=0&autoplay=1" frameborder="0" allowfullscreen></iframe>');
+    req.flash('success', 'Congrats, You Logged Out... Way To Conform To Societial Standards. Sheep.');
 
     res.setTimeout(2000, (data) => {
       console.log(data);
-      res.redirect('/loggedIn');
+      res.redirect('/gallery');
     });
 
 });

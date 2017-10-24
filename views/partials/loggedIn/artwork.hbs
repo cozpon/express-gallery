@@ -2,9 +2,10 @@
 
 <h1>_One ArtWork</h1>
 
+
+
 <div class="bigger-container">
 <div class="content">
-
 <div class="collection">
   <div class="single-artwork">
     <br>
@@ -15,7 +16,7 @@
     </div>
 
     <li>Description : {{data.description}}</li>
-    <a href="http://localhost:4567/gallery/{{data.id}}/edit"style='color: #666;'>Edit Item</a>
+    <a href="/gallery/{{data.id}}/edit"style='color: #666;'>Edit Item</a>
     <br>
     <br>
   </div>
@@ -27,7 +28,7 @@
     {{#each data}}
       <div class="single-item">
           <div class="single-image">
-            <a href="http://localhost:4567/loggedIn/{{id}}">
+            <a href="/loggedIn/{{id}}">
               <img class="art-image" width="200"src="{{link}}" alt="French Plús" >
             </a>
             </div>
@@ -40,6 +41,6 @@
 </div>
 </div>
 
-<a href="http://localhost:4567/gallery/new" style='color: #666;'>Create New Artwork</a>
+<a href="/gallery/new" style='color: #666;'>Create New Artwork</a>
 
 {{>logout}}

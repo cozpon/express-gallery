@@ -7,14 +7,17 @@
   </div>
 </div>
 
-{{!-- {{#if expressFlash}}
-    <p> {{{ expressFlash }}}</p>
-{{/if}} --}}
+
 
 {{!-- login --}}
 <a href="/gallery/new" style='color: #666;'>Create New Artwork</a><br>
 {{>logout}}
 
+<div class="flash">
+{{#if expressFlash}}
+    <p> {{{ expressFlash }}}</p>
+{{/if}}
+</div>
 
 {{!-- header photo --}}
 <div class="collection">

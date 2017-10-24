@@ -124,13 +124,6 @@ function isAuthenticated(req, res, next) {
   else {res.redirect('/login.html');}
 }
 
-app.get('/secret', isAuthenticated, (req,res) => {
-  console.log('req.user',req.user);
-  console.log('req.user.id', req.user.id);
-  console.log('req.user.username',req.user.username);
-  console.log('req.user.password',req.user.password);
-  res.send('you found the secret');
-});
 //////end authentication
 
 
@@ -218,32 +211,37 @@ app.get('/gallery/:id', (req, res) => {
 
 app.get('/gallery/:id/edit', isAuthenticated, (req, res) => {
   const id = req.params.id;
-
+  if(req.user.id === id){
     return artworks.findById(id)
     .then((artwork) => {
        if(req.user.id === artwork.userId){
-      let locals ={
-        artwork : artwork
-
-      };
-      return res.render('partials/gallery/edit', locals);
-    }
-  });
+        let locals ={
+          artwork : artwork
+        };
+        return res.render('partials/gallery/edit', locals);
+       }
+    });
+  } else {
+    return res.redirect('/error');
+  }
 });
 
 
 app.put('/gallery/:id/edit', isAuthenticated, (req, res) => {
   const data = req.body;
   const id = req.params.id;
-
-  return artworks.update({author : data.author, link : data.link, description : data.description}, { where : {id : id}})
+  return artworks.update({
+    author : data.author,
+    link : data.link,
+    description : data.description
+    },
+    {
+    where : {id : id}})
     .then((artwork) => {
       let locals ={
         artwork : artwork
       };
-
       return res.redirect('/gallery');
-
     })
     .catch(err => {
       console.log(err);
@@ -254,8 +252,6 @@ app.put('/gallery/:id/edit', isAuthenticated, (req, res) => {
 app.delete('/gallery/:id/edit', isAuthenticated, (req, res) => {
   const id = req.params.id;
   console.log("REQPARAMSID",id);
-
-
   return artworks.destroy({where : {id : id}})
       .then((artwork) => {
         let locals ={
@@ -276,16 +272,21 @@ app.delete('/gallery/:id/edit', isAuthenticated, (req, res) => {
 
 // Route that creates a flash message using the express-flash module
 app.get('/flash', function( req, res ) {
-
-    req.flash('success', 'Congrats, You Logged Out... Way To Conform To Societial Standards. Sheep.');
-
-    res.setTimeout(2000, (data) => {
-      console.log(data);
-      res.redirect('/gallery');
-    });
-
+  req.flash('success', 'Congrats, You Logged Out... Way To Conform To Societial Standards. Sheep.');
+  res.setTimeout(2000, (data) => {
+    res.redirect('/gallery');
+  });
 });
-///flash end
+
+
+app.get('/error', function( req, res ) {
+  req.flash('success', 'Error! You Lack The Access To Edit This Image!');
+  console.log("Yooo");
+  res.setTimeout(10, (data) => {
+  res.redirect('/loggedIn');
+  });
+});
+
 
 
 app.listen(port, () => {

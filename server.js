@@ -13,7 +13,6 @@ const path = require('path');
 
 const redis = require('connect-redis')(session);
 
-
 const saltRounds = 12; //about 3 sec.
 const port = process.env.PORT || 4567;
 const app = express();
